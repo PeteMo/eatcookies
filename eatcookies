@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Delete all cookies from a chromium profile except those on a whitelist.
+# Requires sqlite.
+# Pete Morris 2009.
+
+# Enter the domain of cookies to keep; use % as wildcard.
+whitelist=( 
+    %.archlinux.org
+    %identi.ca
+)
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    echo "Usage: "$0" [profile]"
+    echo "        [profile] defaults to \`Default'"
+    exit 1
+fi
+    
+profile=${1:-Default}
+sqlite=$(which sqlite3)
+[ -z $sqlite ] &&
+{
+    echo "sqlite3 not found."
+    exit 1
+}
+cookie_file=~/.config/chromium/"$profile"/Cookies
+[ -f "$cookie_file" ] || 
+{ 
+    echo "cookie file $cookie_file doesn't exist"; 
+    exit 1
+}
+
+# Build the delete statement.
+sql="delete from cookies where"
+for domain in "${whitelist[@]}"; do
+    sql="$sql host_key not like \"$domain\" and"
+done
+
+# Replace trailing `and' with a semicolon.
+sql=${sql/%and/;}
+
+# Eat the cookies!
+$sqlite "$cookie_file" "$sql"
