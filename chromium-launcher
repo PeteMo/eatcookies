@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Clear cookies except for those on a whitelist when chromium closes properly.
+/usr/bin/chromium "$@" && eatcookies
