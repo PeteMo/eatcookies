@@ -1,0 +1,19 @@
+Name: 
+    eatcookies
+
+Description: 
+    eatcookies implements a cookie whitelist for the Chromium web browser.
+Sites are added to the whitelist by editing the `whitelist' array in the
+script.  The `%' character acts as a wildcard.
+
+Usage: 
+    eatcookies can be run at any time to remove all cookies not on the
+whitelist.  Another option is to call chromium via a wrapper script that calls
+eatcookies when the browser exits cleanly.  See chromium-launcher for an
+example.
+
+Dependencies:
+    sqlite3 - http://www.sqlite.org/
+
+Author:
+    Pete Morris <pete dot morris at gmail>
