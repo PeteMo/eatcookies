@@ -6,8 +6,9 @@
 
 # Enter the domain of cookies to keep; use % as wildcard.
 whitelist=( 
-    %.archlinux.org
+    %archlinux.org
     %identi.ca
+    %espn.com
 )
 
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
@@ -26,7 +27,7 @@ sqlite=$(which sqlite3)
 cookie_file=~/.config/chromium/"$profile"/Cookies
 [ -f "$cookie_file" ] || 
 { 
-    echo "cookie file $cookie_file doesn't exist"; 
+    echo "cookie file $cookie_file doesn't exist."; 
     exit 1
 }
 
